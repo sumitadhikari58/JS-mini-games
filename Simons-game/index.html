@@ -4,28 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        div{
-            background-color: pink;
-            height: 200px;
-            width: 200px;
-        }
-        ul{
-            background-color: tomato;
-        }
-        li{
-            background-color: lightgreen;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div>
-        <ul>
-            <li>Red</li>
-            <li>Green</li>
-            <li>Blue</li>
-        </ul>
+    <h1>Simon's Game</h1>
+    <h2>Press any key to start the game</h2>
+    <div class="btn-container">
+        <div class="line1">
+        <div class="btn red " type ="button" id="red">1</div>
+        <div class="btn yellow"type="button" id="yellow">2</div>
     </div>
+    <div class="line2">
+        <div class="btn blue" type="button" id="blue">3</div>
+        <div class="btn green" type="button" id="green">4</div>
+        
+    </div>
+
     <script src="app.js"></script>
 </body>
 </html>
