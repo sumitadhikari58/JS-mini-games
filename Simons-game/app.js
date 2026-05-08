@@ -61,6 +61,7 @@ function btnPress(){
     check(idx);
 }
 let buttons = document.querySelectorAll(".btn");
+// This loop adds click event listeners to all buttons
 for(btn of buttons){
     btn.addEventListener("click",btnPress);
 }
