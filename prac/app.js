@@ -107,11 +107,11 @@
 //     await getNum();
 // }
 // demo();
-let data = 
-  '{"fact": "If your cat snores, or rolls over on his back to expose his belly, it means he trusts you.","length": 90}'
-  let valid = JSON.parse(data);
-  console.log(valid.fact)
-  let student = {
-    "class" : 9,
-    "name" : "sumit"
-  }
+// let data = 
+//   '{"fact": "If your cat snores, or rolls over on his back to expose his belly, it means he trusts you.","length": 90}'
+//   let valid = JSON.parse(data);
+//   console.log(valid.fact)
+//   let student = {
+//     "class" : 9,
+//     "name" : "sumit"
+//   }

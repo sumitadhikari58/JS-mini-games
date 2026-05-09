@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Password Generator</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0f0f0f;
+      font-family: 'Segoe UI', sans-serif;
+      color: #e8e8e8;
+    }
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2e2e2e;
+      border-radius: 12px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 420px;
+    }
+    h1 { font-size: 20px; font-weight: 600; margin-bottom: 1.5rem; color: #fff; }
+
+    .field { margin-bottom: 1.2rem; }
+    label { display: block; font-size: 13px; color: #888; margin-bottom: 6px; }
+    input[type="number"] {
+      width: 100%;
+      padding: 9px 12px;
+      background: #242424;
+      border: 1px solid #2e2e2e;
+      border-radius: 8px;
+      color: #e8e8e8;
+      font-size: 14px;
+      outline: none;
+    }
+    input[type="number"]:focus { border-color: #4f8ef7; }
+
+    .checks { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; }
+    .check-item { display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; }
+    .check-item input { width: 16px; height: 16px; accent-color: #4f8ef7; cursor: pointer; }
+
+    .btn {
+      width: 100%;
+      padding: 11px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+    .btn:hover { opacity: .85; }
+    .btn-primary { background: #4f8ef7; color: #fff; margin-bottom: 1rem; }
+
+    .output { display: none; margin-top: 1rem; }
+    .output label { margin-bottom: 6px; }
+    .password-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #242424;
+      border: 1px solid #2e2e2e;
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    #password-display {
+      flex: 1;
+      font-size: 15px;
+      font-family: monospace;
+      color: #4f8ef7;
+      word-break: break-all;
+    }
+    #copy-btn {
+      background: #2e2e2e;
+      border: none;
+      border-radius: 6px;
+      color: #e8e8e8;
+      cursor: pointer;
+      font-size: 12px;
+      padding: 5px 10px;
+      white-space: nowrap;
+      transition: background .15s;
+    }
+    #copy-btn:hover { background: #3a3a3a; }
+    #copy-msg {
+      font-size: 12px;
+      color: #22c55e;
+      margin-top: 6px;
+      min-height: 16px;
+    }
+    #error-msg {
+      font-size: 12px;
+      color: #ef4444;
+      margin-top: 8px;
+      min-height: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🔐 Password Generator</h1>
+
+    <div class="field">
+      <label for="length">Password Length</label>
+      <input type="number" id="length" value="12" min="4" max="32" />
+    </div>
+
+    <div class="checks">
+      <label class="check-item">
+        <input type="checkbox" id="include-numbers" checked />
+        Numbers
+      </label>
+      <label class="check-item">
+        <input type="checkbox" id="include-symbols" />
+        Symbols
+      </label>
+    </div>
+
+    <button class="btn btn-primary" id="generate-btn">Generate Password</button>
+    <p id="error-msg"></p>
+
+    <div class="output" id="output">
+      <label>Your Password</label>
+      <div class="password-box">
+        <span id="password-display"></span>
+        <button id="copy-btn">Copy</button>
+      </div>
+      <p id="copy-msg"></p>
+    </div>
+  </div>
+
+  <script>
+    // ── YOUR CHARACTER SETS ──────────────────────────────
+    const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numbers = '0123456789';
+    const symbols = '!@#$%^&*()_+';
+
+    // ── IDs AVAILABLE TO YOU ─────────────────────────────
+    // #length           → input (number) — password length
+    // #include-numbers  → checkbox
+    // #include-symbols  → checkbox
+    // #generate-btn     → generate button
+    // #password-display → span — put the password here
+    // #output           → div  — set display:'block' to show it
+    // #copy-btn         → copy button
+    // #copy-msg         → p — show "Copied!" here
+    // #error-msg        → p — show errors here
+
+    // ── WRITE YOUR JS BELOW ──────────────────────────────
+    const lngth = document.getElementById('length');
+let password = '';
+
+document.getElementById('generate-btn').addEventListener('click', () => {
+  generatePassword();
+});
+
+document.getElementById('copy-btn').addEventListener('click', () => {
+  navigator.clipboard.writeText(password);
+  document.getElementById('copy-msg').textContent = 'Copied!';
+});
+
+function generatePassword() {
+  password = '';
+  let pools = letters;
+
+  if (document.getElementById('include-numbers').checked) {
+    pools += numbers;
+  }
+  if (document.getElementById('include-symbols').checked) {
+    pools += symbols;
+  }
+
+  for (let i = 0; i < lngth.value; i++) {
+    let char = pools[Math.floor(Math.random() * pools.length)];
+    password += char;
+  }
+
+  document.getElementById('password-display').textContent = password;
+  document.getElementById('output').style.display = 'block';
+  document.getElementById('copy-msg').textContent = '';
+}
+
+  </script>
+</body>
+</html>
