@@ -2,6 +2,8 @@ const express = require("express")
 const app = express()
 const path = require("path")
 const { randomUUID } = require('crypto')
+const methodOverride = require('method-override')
+app.use(methodOverride('_method'))
 let port = 3000
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -34,4 +36,26 @@ app.get("/notes/:id",(req,res)=>{
         return res.status(404).send("Note not found")
     }
     res.render("shownotes.ejs",{note: notesfind});
+})
+app.patch("/notes/:id",(req,res)=>{
+    const{id} = req.params;
+    const notesfind = notes.find(note => note.id === id);
+    if(!notesfind){
+        return res.status(404).send("Note not found");
+    }
+    const {content} = req.body;
+    notesfind.content = content;
+    res.redirect("/notes");
+})
+app.delete("/notes/:id",(req,res)=>{
+    const{id} = req.params;
+    const notesfind = notes.find(note => note.id === id);
+    if(!notesfind){
+        return res.status(404).send("Note not found");
+    }
+    notes = notes.filter(note => note.id !== id)
+    res.redirect("/notes");
+})
+app.listen(port,()=>{
+    console.log(`Running on ${port}`)
 })

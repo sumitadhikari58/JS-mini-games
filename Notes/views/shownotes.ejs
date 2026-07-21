@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head><title><%= note.title %></title></head>
+<body>
+  <h1><%= note.title %></h1>
+  <p><%= note.content %></p>
+  <form action="/notes/<%= note.id %>?_method=PATCH" method="POST">
+    <textarea name="content"><%= note.content %></textarea>
+    <button type="submit">Update</button>
+  </form>
+  <form action="/notes/<%= note.id %>?_method=DELETE" method="POST">
+    <button type="submit">Delete</button>
+  </form>
+  <a href="/notes">Back</a>
+</body>
+</html>
